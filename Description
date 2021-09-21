@@ -1,0 +1,67 @@
+Component Used
+LED, Resistor, 8051 Microcontroller, 74HC595 Shift Register, Crystal Oscillator(12MHz), Capacitor(10 micro Farad, 30pF), Switch, Wires.
+
+8051 Microcontroller Pin Configuration:
+•	Pin 1 to 8: Also know as port 1 and used as simple I/O operations [can be configured as input pin if logic 1 is applied to I/O port and output pin if logic 0 is applied to I/O port]. These are bidirectional pin.
+•	Pin 9: Also known as Reset Pin which is used to reset microcontroller to its initial values. A logic of +5V on reset pin for minimum of two machine cycles will reset 8051 microcontroller. It is often referred as “power-on-reset” pin because it is used to reset the microcontroller to it’s initial values when power is on (high).
+•	Pin 10 to 17: Known as Port 3. These pins are similar to port 1 and can be used as universal input or output pins. These pins are bidirectional pins. These pins also have some additional function.
+•	P3.0 (RXD) :10th pin is RXD (serial data receive pin) which is for serial input. Through this input signal microcontroller receives data for serial communication.
+•	P3.1 (TXD) :11th pin is TXD (serial data transmit pin) which is serial output pin. Through this output signal microcontroller transmits data for serial communication.
+•	P3.2 and P3.3 (INT0′, INT1′ ) :12th and 13th pins are for External Hardware Interrupt 0 and Interrupt 1 respectively. When this interrupt is activated(i.e. when it is low), 8051 gets interrupted in whatever it is doing and jumps to the vector value of the interrupt (0003H for INT0 and 0013H for INT1) and starts performing Interrupt Service Routine (ISR) from that vector location.
+•	P3.4 and P3.5 (T0 and T1) :14th and 15th pin are for Timer 0 and Timer 1 external input. They can be connected with 16 bit timer/counter.
+•	P3.6 (WR’) :16th pin is for external memory write i.e. writing data to the external memory.
+•	P3.7 (RD’) :17th pin is for external memory read i.e. reading data from external memory.
+•	Pin 18 and Pin 19: These pins are connected to an external oscillator which is generally a quartz crystal oscillator. They are used to provide an external clock frequency of 4MHz to 30MHz.
+•	Pin 20 (GND): This pin is connected to the ground. It has to be provided with 0V power supply. Hence it is connected to the negative terminal of the power supply.
+•	Pin 21 to Pin 28 (Port 2): Pin 21 to pin 28 are port 2 pins also referred to as P2.0 to P2.7. When additional external memory is interfaced with the 8051 microcontroller, pins of port 2 act as higher-order address bytes. These pins are bidirectional.
+•	Pin 29 (PSEN): PSEN stands for Program Store Enable. It is output, active-low pin. This is used to read external memory.
+•	Pin 30 (ALE/ PROG): ALE stands for Address Latch Enable. It is input, active-high pin. It is used to de-multiplex the multiplexed address and data signals available at port 0. During flash programming i.e. Programming of EPROM, this pin acts as program pulse input (PROG).
+•	Pin 31 (EA/ VPP): EA stands for External Access input. It is used to enable/disable external memory interfacing. In 8051, EA is connected to Vcc as it comes with on-chip ROM to store programs. For other family members such as 8031 and 8032 in which there is no on-chip ROM, the EA pin is connected to the GND.
+•	Pin 32 to Pin 39 (Port 0): Known as port 0. They are bidirectional input/output pins. They don’t have any internal pull-ups.
+•	Pin 40 (VCC): This pin provides power supply voltage i.e. +5 Volts to the circuit.
+
+8051 Microcontroller Pin Current Limitation:
+•	When pins are configured as an output (i.e. logic 0), then the single port pins can receive a current of 10mA.
+•	If all 8 bits of a port are active, then the total current must be limited to 15mA.
+•	If all ports (32 bits) are active, then total maximum current must be limited to 71mA.
+
+How to Find Value of Resistor:
+Under normal working condition, the voltage across an LED is about 2V and current through the LED is about 10mA. The maximum current that can be sourced or sinked at output port of a 8051 microcontroller is 10mA. The value of the current limiting resistor R can be calculated as:
+R= (Supply Voltage – Voltage across LED)/Current through LED = (5-2)V/10mA = 300 ohm.
+
+Shift Register:
+•	A register is a digital circuit with basic functions: Data Storage and Data Movement.
+•	The storage capacity of a register is the total number of bits it can retain.
+•	Shift registers consists of an arrangement of flip-flops in such a way that output of one flip-flop is an input to another flip-flop, depending on type of shift register.
+o	Each stage (flip-flop) in a shift register represents one bit of storage capacity.
+o	The shifting capacity permits the movement of data from stage to stage within the register or into or out of the register upon application of clock pulses
+
+Types of Shift Register:
+Serial in/Serial Out
+Serial In/Parallel Out
+Parallel In/Serial Out
+Parallel In/Parallel Out
+
+74HC595 Shift Register:
+•	74HC595 IC is a 16-pin shift register IC consisting of a D-type latch along with a shift register inside the chip. It receives serial input data and then sends out this data through parallel pins. In addition to parallel outputs, it also provides a serial output. It has independent clock inputs for shift register and D latch. 
+•	74HC595 has two built-in registers. The first one is a shift register and the second one is a storage register. Data serially transfers to shift register bit by bit. But it transfers to the storage register only when the data latch pin is active high.
+
+74HC595 Pin Configuration:
+•	Pin 1,2,3,4,5,6,7,15
+o	These eight pins are the output pins of the shift register. We should connect these pins with any peripheral where we want to display storage register data. Commonly used components are like LED, seven-segment displays, etc.
+•	Pin 8
+o	This is the ground pin and is connected to the ground of the circuit.
+•	Pin 9
+o	It is a non-inverted serial data output coming out of the eighth stage of a shift register. It is also used for cascading purposes. For instance, if we need 16 bits shift register. We can daisy-chain two 74HC595 ICs. To do this, simply connect ~Q7 pin with Serial input DS pin(14 pin) of 2nd 595 IC. Moreover, provides the same clock signal to both integrated circuits. In this way, two 74HC595 will work as a single 16-bit shift register. Furthermore, you can continue this process to connect as many ICs as you want to get more data width.
+•	Pin 10
+o	It is an asynchronous, active low master reset Input which is used to reset the shift register only. The 8-bit latch is not affected by this input.  Applying a low signal at pin 10 will reset the shift register portion only.
+•	Pin 11
+o	This is the clock input pin of a 74HC595 shift register. A data is shifted from the serial input pin to the 8-bit shift register on every positive transition of the clock signal applied at this pin.
+•	Pin 12
+o	This is the active high, clock input pin of a storage register. A positive transition of a signal at this pin is used to update the data to the output pins.
+•	Pin 13
+o	The Output Enable pin is active low. When this pin is low, the data in the storage register appears at the output. On applying high signals, outputs are turned off by forcing them into the high-impedance state. However, serial output is not affected at all. For normal operations, it is kept low.
+•	Pin 14
+o	This is the serial data input pin, where input data is provided.
+•	Pin 16
+o	A positive power supply is provided at this pin.
